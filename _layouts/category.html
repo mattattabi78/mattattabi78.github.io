@@ -1,0 +1,27 @@
+<!-- 
+여러 포스트들을 묶어서 하나의 카테고리로 만드는 html
+-->
+
+---
+layout: default
+---
+
+<h1>{{ page.category | capitalize }}</h1>
+
+<ul class="post-list">
+  {% for post in site.categories[page.category] %}
+    <li class="post-item">
+      <a class="post-title" href="{{ post.url }}">
+        {{ post.title }}
+      </a>
+
+      <div class="post-meta">
+        {{ post.date | date: "%Y-%m-%d" }}
+      </div>
+
+      <div class="post-desc">
+        {{ post.description }}
+      </div>
+    </li>
+  {% endfor %}
+</ul>
