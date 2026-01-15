@@ -2,9 +2,6 @@
 한 카테고리 안의 post들을 보여주는 페이지
 -->
 
----
-layout: default
----
 
 <h1>{{ page.category | capitalize }}</h1>
 
@@ -19,9 +16,11 @@ layout: default
         {{ post.date | date: "%Y-%m-%d" }}
       </div>
 
+      {% if post.description %}
       <div class="post-desc">
         {{ post.description }}
       </div>
+      {% endif %}
     </li>
   {% endfor %}
 </ul>
