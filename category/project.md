@@ -1,6 +1,7 @@
 ---
+layout: category
 title: Project
-layout: default
 category: project
+permalink: /category/project/
 ---
 
