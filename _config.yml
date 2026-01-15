@@ -1,0 +1,15 @@
+title: Your Research Notes
+description: Minimal GitHub Pages blog for papers, math, and code
+theme: minima
+
+markdown: kramdown
+highlighter: rouge
+
+kramdown:
+  math_engine: mathjax
+  input: GFM
+
+permalink: /:year/:month/:day/:title/
+
+plugins:
+  - jekyll-feed
