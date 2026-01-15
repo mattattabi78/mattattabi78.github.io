@@ -19,18 +19,20 @@
 
 <body>
   <div class="layout">
-    <aside class="sidebar">
-      <div class="sidebar-title">Folders</div>
+    <nav class="sidebar">
+      <div class="sidebar-title">Topics</div>
       <ul>
         {% for category in site.categories %}
+          {% assign cat_name = category[0] %}
           <li>
-            <a href="/{{ category[0] }}">
-              {{ category[0] }}
+            <a href="/{{ cat_name }}/">
+              {{ cat_name | capitalize }}
             </a>
           </li>
         {% endfor %}
       </ul>
-    </aside>
+    </nav>
+
 
     <main>
       {{ content }}
