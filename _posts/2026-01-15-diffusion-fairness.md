@@ -1,8 +1,8 @@
 ---
 layout: post
-title: Fairness in Diffusion Models
+title: generative ai paper review
 paper: "Bias and Fairness in Diffusion Models"
-category: Generative AI
+category: generative-ai
 link: https://arxiv.org/abs/xxxx.xxxxx
 ---
 
