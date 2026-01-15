@@ -1,3 +1,7 @@
+<!--
+기본 블로그 html
+-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,8 +18,23 @@
 </head>
 
 <body>
-  <main>
-    {{ content }}
-  </main>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-title">Folders</div>
+      <ul>
+        {% for category in site.categories %}
+          <li>
+            <a href="/{{ category[0] }}">
+              {{ category[0] }}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    </aside>
+
+    <main>
+      {{ content }}
+    </main>
+  </div>
 </body>
 </html>
