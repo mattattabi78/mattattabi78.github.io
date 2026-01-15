@@ -13,11 +13,13 @@ title: Home
       {{ post.title }}
     </a>
 
-    {% if post.paper %}
-      <div class="post-meta">
-        {{ post.paper }}
-      </div>
-    {% endif %}
+    <div class="post-meta">
+      {{ post.date | date: "%Y-%m-%d" }}
+    </div>
+
+    <div class="post-desc">
+      {{ post.excerpt | strip_html | truncate: 120 }}
+    </div>
   </li>
 {% endfor %}
 </ul>
