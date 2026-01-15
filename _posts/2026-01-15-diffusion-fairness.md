@@ -2,6 +2,7 @@
 layout: post
 title: Fairness in Diffusion Models
 paper: "Bias and Fairness in Diffusion Models"
+category: Generative AI
 link: https://arxiv.org/abs/xxxx.xxxxx
 ---
 
