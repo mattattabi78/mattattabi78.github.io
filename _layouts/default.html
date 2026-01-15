@@ -35,7 +35,34 @@
 
 
     <main>
-      {{ content }}
+      <h1>{{ page.title }}</h1>
+    
+      <ul class="post-list">
+        {% assign posts_to_show = page.category | default: nil %}
+        {% if posts_to_show %}
+          {% assign posts_to_show = site.categories[page.category] %}
+        {% else %}
+          {% assign posts_to_show = site.posts %}
+        {% endif %}
+    
+        {% for post in posts_to_show %}
+          <li class="post-item">
+            <a class="post-title" href="{{ post.url }}">
+              {{ post.title }}
+            </a>
+    
+            <div class="post-meta">
+              {{ post.date | date: "%Y-%m-%d" }}
+            </div>
+    
+            {% if post.description %}
+            <div class="post-desc">
+              {{ post.description }}
+            </div>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
     </main>
   </div>
 </body>
