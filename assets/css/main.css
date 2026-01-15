@@ -83,3 +83,20 @@ blockquote {
   color: #444;
 }
 
+
+/* Post navigation */
+
+.post-nav {
+  margin-bottom: 2.5em;
+}
+
+.post-nav a {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 0.85em;
+  color: #666;
+  text-decoration: none;
+}
+
+.post-nav a:hover {
+  text-decoration: underline;
+}
