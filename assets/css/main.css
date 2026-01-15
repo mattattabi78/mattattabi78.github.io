@@ -1,21 +1,23 @@
 body {
   margin: 0;
   padding: 40px 20px;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: "Libre Baskerville", "Times New Roman", serif;
   background: #ffffff;
   color: #111;
 }
+
 
 main {
   max-width: 720px;
   margin: auto;
 }
 
+
 h1, h2, h3 {
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: 600;
-  margin-top: 2.5em;
 }
+
 
 .meta {
   color: #666;
