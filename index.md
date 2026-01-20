@@ -18,7 +18,7 @@ title: Home
     </div>
 
     <div class="post-desc">
-      {{ post.summary }}
+      {{ post.summary | default: post.excerpt | strip_html | truncate: 120 }}
     </div>
   </li>
 {% endfor %}
