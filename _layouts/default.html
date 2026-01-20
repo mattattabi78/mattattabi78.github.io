@@ -25,7 +25,7 @@
         {% for category in site.categories %}
           {% assign cat_name = category[0] %}
           <li>
-            <a href="/{{ cat_name | downcase }}/">
+            <a href="/category/{{ cat_name | downcase }}/">
               {{ cat_name | replace: '-', ' ' | upcase }}
             </a>
           </li>
