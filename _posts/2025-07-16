@@ -1,0 +1,201 @@
+---
+layout: post
+title: VAE paper reivew
+paper: "Auto-Encoding Variational Bayes"
+category: generative-ai
+link: https://arxiv.org/pdf/1312.6114](https://arxiv.org/pdf/1312.6114
+summary: Summary of VAE paper!
+---
+
+## Korean Summary
+
+VAE는 Auto Encoder의 인코딩 부분을 발전시켜 확률론적 샘플링이 가능하게 만든 생성형 모델로, 기존의 이미지를 잠재 공간 차원으로 압축하고 다시 원래 차원으로 되돌리는 중간 과정에서 구해지는 $z$의 확률 분포를 근사하여 학습 데이터에 없었던 데이터를 생성할 수 있다.
+
+확률론적인 모델을 완성하기 위해선 다음과 같은 기능들이 필요했다.
+
+- 실제로 구할 수 없는 분포를 추정하기
+- 확률론적인 샘플링 과정에서 기울기를 추정하기
+
+이와 같은 문제들을 각각 ELBO 방식과 Reparameterization 방법을 사용하여 해결한다.
+
+더불어, SGVB는 확률적으로 샘플링 하는 과정을 미분 가능하게 추적하고, reparameterize가 확률적으로 샘플링된 변수를 처리한다. 이러한 VAE를 학습하는 일련의 알고리즘을 AEVB라고 한다.
+
+## What is Stochastic Latent Variable Model?
+
+It is essential knowing Stochastic Latent Variable model to understand VAE. Stochastic Latent Variable model is model that generative data with latent variable by stochastic. Latent variable is non-visible but having influence when generating data(e.g style, concept etc). Model learns latent feature ‘z’ from object(data) and generates data from that $z ∼ p(z)$.
+
+## What is Auto Encoder?
+
+Auto encoder is self-reconstructive algorithm neural network model. With given input $x$(image, wave etc.) through Encoder and Decoder, reconstruct data.
+
+### Encoder
+
+When data through encoder, model extract some feature called $z$ of data. For example, when input data is human’ face, model extract what eyes, mouth, hair texture, nose and ears looks like. after encoding, we get latent variable $z$ which contain features of data with condense way.
+
+### Decoder
+
+And When data through decoder, model try reconstruct data from latent variable $z$. Model learned to reduce error from mathematical difference(loss function) from original data and reconstructed data $\underset{\theta}{min}\ x - \hat{x}$. Thanks to this encoder—pair structure, model can do denoising, extract latent variable form data. Given latent variable $z$, Decoder compute PDF of each image pixel $x_j$
+
+$$
+p_θ(x∣z)=\underset{j=1}{\overset{D}{∏}}p_θ(x_j∣z)
+$$
+
+- $D$: number of pixel
+
+### Parameter of Auto Encoder
+
+$$
+z = f_\phi(x) = ReLU(Wx + b)
+$$
+
+if $x \in \mathbb{R}^{784}$ and $z \in \mathbb{R}^{32}$, $W$ $\in \mathbb{R}^{784*32}$ as a weight matrix and $b \in \mathbb{R}^{32}$  as a bias vector 
+
+# So, What is VAE(Variational Auto Encoder)?
+
+VAE is generative model that adding stochastic mechanism to Auto Encoder. Auto Encoder good at reconstructing data but not generate it. VAE can generate novel one. To put more simply, VAE’s goal is estimate distribution of $z$ from dataset. The core of VAE is that learned Auto Encoding model can decode target data from probability distribution.
+
+## How VAE can estimate probability distribution?
+
+### Imposible to compute posterior distribution $p_\theta(z|x)$ - paper 2.1
+
+It is impossible to get correct probability distribution of $z$. Let us consider some dataset $X = \{ x^{(i)} \}^{N}_{i=1}$.  And let assume below two steps.
+
+- a value $z^{(i)}$ is generated from some prior distribution $p_{\theta^*}(z)$
+- a value $x^{(i)}$ is generated from some conditional distribution $p_{\theta^*}(x|z)$
+
+These two distribution $p_{\theta^*}(z)$ and $p_{\theta^*}(x|z)$ and there PDFs are differentiable everywhere both $\theta$ and $z$.
+
+But, these values($\theta^*$ and $z$) are not observable and staying unknown. So we need detour to estimate these values.
+
+So, ALL WE NEED is compute PDF of $p_\theta (z|x) = \frac{p_\theta (x|z) p_\theta (z)}{p_\theta (x)}$. But it is impossible to compute when treated in neural network.
+
+- Why $p_\theta(z|x)$ is impossible to compute?
+    
+    $$
+    p_\theta (z|x) = \frac{p_\theta (x|z) p_\theta (z)}{p_\theta (x)}
+    $$
+    
+    in equation above, denominator $p_\theta (x)$ can be represented by below.
+    
+    $$
+    p_θ(x)=∫p_θ(x∣z)⋅p_θ(z)dz
+    $$
+    
+    Thought $z$ belongs to high dimensional space, computation amount will be exploded. And thus $p_θ(x∣z)$ is non-linear distribution, it is impossible to compute above form.
+    
+
+### Detour
+
+For detouring, paper introduce a recognition model $q_\phi (z|x)$: an approximation to the intractable true posterior $p_\theta(z|x)$. In this paper, we will therefor also refer to the recognition model $q_\phi (z|x)$ as a probabilistic encoder, since given a datapoint x, it produces a distribution over the possible values of the $z$ from datapoint $x$. And we call $p_\theta(x|z)$ as a probabilistic decoder, since given $z$, it produces a distribution over the possible corresponding value of $x$. About what $q_\phi (z|x)$ looks like is treated in 2.4
+
+### Do some math! (ELBO and KL-divergnece) - paper 2.2
+
+To get $q_\phi (z|x)$ and approximate $p_\theta(z|x)$, we need variational inference to know how our approximation works well.
+
+The marginal likelihood is composed of sum over the marginal likelihoods of individual datapoints like below.
+
+$$
+\log p_θ(x^{(1)}, · · · , x^{(N)}) = \Sigma^N_{i=1} \log p_θ(x^{(i)})
+$$
+
+And this can be rewritten as below. Below equation are composed with sum of two part that KL-divergence and ELBO
+
+$$
+\log p_θ(x^{(i)}) = D_{KL}(q_\phi(z|x^{(i)})||p_θ(z|x^{(i)})) + \mathcal{L}(θ, \phi; x^{(i)})
+$$
+
+- $\log p_θ(x^{(i)})$: Our target log-likelihood
+- $D_{KL}(q_\phi(z|x^{(i)})||p_θ(z|x^{(i)}))$: KL divergence between real distribution and detour one.
+- $\mathcal{L}(θ, \phi; x^{(i)})$: variational lower bound = ELBO(변분 하한)
+
+KL-divergence is always positive value, so our target is change to maximize ELBO. So, above can be written as below
+
+$$
+\log p_θ(x^{(i)}) ≥ \mathcal{L}(θ, \phi; x^{(i)}) = \mathbb E_{q_\phi(z|x)}
+[− \log q_\phi(z|x) + \log p_θ(x, z)]
+$$
+
+which can also be written as below.
+
+$$
+\mathcal L(θ, \phi; x^{(i)}) = −D_{KL}(\ q_\phi(z|x^{(i)})\ ||\ p_θ(z)\ ) + \mathbb E_{q_\phi(z|x^{(i)})}
+
+[\log p_θ(x^{(i)}|z)]
+
+$$
+
+- $−D_{KL}(q_\phi(z|x^{(i)})||p_θ(z))$: KL divergence between encoder distribution $q_\phi(z|x^{(i)})$ and original distribution $p_θ(z)$
+- $E_{q_\phi(z|x^{(i)})}[\log p_θ(x^{(i)}|z)]$: reconstruction likelihood. Extent of decoder reconstructing $x$ from $z$.
+
+Now we got new purpose. Our ELBO is looks like above, so we need to maximize that equation.
+
+[What is ELBO(**Evidence lower bound**)? (1)](https://www.notion.so/What-is-ELBO-Evidence-lower-bound-1-244d2f12f07880c8be50dca2e7c0e308?pvs=21)
+
+“We want to differentiate and optimize the lower bound $\mathcal L(θ, \phi; x^{(i)})$ both the variational parameters $\phi$ and generative parameters $\theta$. However the gradient of the lower bound $\phi$ is a bit problematic. compute Monte Carlo gradient estimator for this equation give us very high variance that impractical for our purpose. 
+
+(변분 파라미터 $\phi$는 이전에 데이터 $x$로부터의 $z$를 추정하기 위해 도입된 파라미터이다.)
+
+## How to Reparameterize $\phi$ and $q_\phi(z|x)$?
+
+We want to maximize ELBO($E_{q_\phi(z∣x)}[\log p_θ(x∣z)]$). But it’s sampling process it stochastic, it is impossible to get derivative.
+
+For this reason, we did not sample from direct distribution, we sample from deterministic. 
+
+Let $z$ be a continuous random variable and $z ∼ q_\phi(z|x)$ be some conditional distribution, and it is possible to express the random variable $z$ as a deterministic variable.
+
+$$
+z = g_\phi(\epsilon, x)
+$$
+
+- $\epsilon$: assistant variable with independent marginal $p(\epsilon)$(distribution).
+- $g_\phi(⋅)$: vector-valued function parameterized by $\phi$.
+
+About express sampling function as deterministic function.
+
+For example, let $q_\phi(z∣x)=N(μ_\phi(x),σ_\phi(x)^2)$. But it is impossible to do sampling from $z∼q_\phi(z∣x)$. We can change it as deterministic form like below.
+
+$$
+z=μ_ϕ(x)+σ_ϕ(x)⋅\epsilon, \ \ \ \ \epsilon∼N(0,1)
+$$
+
+- $\epsilon$: noise variable sampled from gaussian distribution.
+- $\mu_\phi(x)$, $\sigma_\phi(x)$: parameter that output of encoder from given $x$
+
+Now we can express some distribution as deterministic form. 
+
+$$
+E_{z∼q_ϕ(z∣x)}[\log p_θ(x∣z)]=E_{ε∼N(0,1)}[\log p_θ(x∣g_ϕ(ε,x))]\ ,\ \ \ \ \ \ g_ϕ(ε,x) = μ_ϕ(x)+σ_ϕ(x)⋅\epsilon, \ \ \ \ \epsilon∼N(0,1)
+$$
+
+So $\phi$ is learnable and tractable parameter of neural network that estimate mean and variance of distribution of latent variable $z$.
+
+## So, how can we estimate these derivatives of parameters? - paper 2.3(The SGVB estimator and AEVB algorithm)
+
+We estimate approximate posterior as $q_\phi(z|x)$ and we can reparameterize $\phi$ as a deterministic. Now we want to estimate sampling function(decoder).
+
+We can now form Monte Carlo estimates of expectation of some function $f(z)$ that $q_\phi(z|x)$.
+
+$$
+E_{q_ϕ(z∣x^{(i)})}[f(z)]=E_{p(ε)}[f(g_ϕ(ε,x(i)))] ≈ \frac {1}{L} \sum _{l=1}^L f(g_ϕ(ε^{(l)},x^{(i)})), \ \ ε^{(l)}∼p(ε)
+$$
+
+We apply this technique to the variational lower bound, define generic Stochastic Gradient Variational Bayes(SGVB).
+
+$$
+{\mathcal L}(θ,ϕ;x^{(i)})≈\hat{\mathcal L}(θ,ϕ;x^{(i)})=\frac{1}{L}\sum_{l=1}^L [\log p_θ(x^{(i)},z^{(i,l)})−\log q_ϕ(z^{(i,l)}∣x^{(i)})]
+$$
+
+As a result, we estimate ELBO as a form of differentiable function and it gives learnability.
+
+# Additional Information
+
+**오토 인코더에 들어오는 이미지들은 어떤 형태로 바뀌게 될까?**
+
+→ 다음과 같이 두 가지로 나뉘게 된다.
+
+- 전통적인 fully-connected MLP: flatten된 1차원 벡터 형태로 이미지가 변환되어 인코딩된다.
+- Convolutional 기반 오토인코더는 flatten 작업 없이 2D or 3D 형태로 인코딩된다. (예: 컬러 이미지 입력 시 → $(3, H, W)$)
+
+오토 인코더에서 추정하는 잠재변수 z는 어떤 형태일까?
+
+→ 여전히 고차원 벡터 형태이다. 따라서 인코더 $q_ϕ(z∣x)$가 추정하는 분포는 대부분 다변량 정규 분포이다.
