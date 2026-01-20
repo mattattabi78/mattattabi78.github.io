@@ -21,13 +21,19 @@
   <div class="layout">
     <nav class="sidebar">
       <div class="sidebar-title">Categories</div>
-      <ul>
-        {% for category in site.categories %}
-          {% assign cat_name = category[0] %}
-          <li>
-            <a href="/category/{{ cat_name | downcase }}/">
-              {{ cat_name | replace: '-', ' ' | upcase }}
-            </a>
+      <ul class="sidebar-section">
+        {% for section in site.category_tree %}
+          <li class="sidebar-section-title">
+            {{ section[1].title }}
+            <ul class="sidebar-sub">
+              {% for cat in section[1].children %}
+                <li>
+                  <a href="/category/{{ cat }}/">
+                    {{ cat | replace: '-', ' ' | upcase }}
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
           </li>
         {% endfor %}
       </ul>
