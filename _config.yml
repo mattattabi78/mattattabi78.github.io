@@ -21,6 +21,7 @@ category_tree:
     children:
       - explainable-ai
       - generative-ai
+      - computer-vision
 
   project:
     title: Project
