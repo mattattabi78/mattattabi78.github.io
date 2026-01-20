@@ -119,6 +119,11 @@ body {
   text-decoration: underline;
 }
 
+.category-count {
+  color: #999;
+  font-size: 0.85em;
+  margin-left: 4px;
+}
 
 /* =====================================================
    Main
