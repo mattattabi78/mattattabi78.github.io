@@ -13,3 +13,16 @@ permalink: /:year/:month/:day/:title/
 
 plugins:
   - jekyll-feed
+
+
+category_tree:
+  paper-review:
+    title: Paper Review
+    children:
+      - explainable-ai
+      - generative-ai
+
+  project:
+    title: Project
+    children:
+      - project
