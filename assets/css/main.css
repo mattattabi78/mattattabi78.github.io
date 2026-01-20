@@ -65,6 +65,61 @@ body {
   color: #000;
 }
 
+/* 범주 리스트 */
+.sidebar-section {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* 범주 헤더 버튼 */
+.sidebar-section-toggle {
+  all: unset;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  padding: 6px 0;
+  width: 100%;
+}
+
+/* ▶ 아이콘 */
+.sidebar-section-toggle .arrow {
+  display: inline-block;
+  width: 1em;
+  margin-right: 6px;
+  transition: transform 0.2s ease;
+}
+
+/* 접힘 상태 */
+.sidebar-sub {
+  list-style: none;
+  padding-left: 1.5em;
+  margin: 4px 0 8px 0;
+  display: none;
+}
+
+/* 펼쳐졌을 때 */
+.sidebar-section-item.open .sidebar-sub {
+  display: block;
+}
+
+.sidebar-section-item.open .arrow {
+  transform: rotate(90deg);
+}
+
+/* 카테고리 아이템 */
+.sidebar-category-item a {
+  font-size: 0.9em;
+  color: #444;
+  text-decoration: none;
+}
+
+.sidebar-category-item a:hover {
+  text-decoration: underline;
+}
+
+
 /* =====================================================
    Main
 ===================================================== */
@@ -175,4 +230,6 @@ blockquote {
 .post-nav a:hover {
   text-decoration: underline;
 }
+
+
 
