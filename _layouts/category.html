@@ -20,10 +20,25 @@
       <ul>
         {% for category in site.categories %}
           {% assign cat_name = category[0] %}
+        <!--
           <li>
             <a href="/category/{{ cat_name | downcase }}/">
               {{ cat_name | capitalize }}
             </a>
+          </li>
+        -->
+          <li class="post-item">
+            <a class="post-title" href="{{ post.url }}">
+              {{ post.title }}
+            </a>
+        
+            <div class="post-meta">
+              {{ post.date | date: "%Y-%m-%d" }}
+            </div>
+        
+            <div class="post-desc">
+              {{ post.summary | default: post.excerpt | strip_html | truncate: 120 }}
+            </div>
           </li>
         {% endfor %}
       </ul>
