@@ -7,7 +7,6 @@ highlighter: rouge
 
 kramdown:
   math_engine: katex
-  input: GFM
 
 permalink: /:year/:month/:day/:title/
 
