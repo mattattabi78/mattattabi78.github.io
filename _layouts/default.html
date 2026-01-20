@@ -35,9 +35,12 @@
             <!-- 하위 카테고리 -->
             <ul class="sidebar-sub">
               {% for cat in section[1].children %}
+                {% assign post_count = site.categories[cat] | size %}
+    
                 <li class="sidebar-category-item">
                   <a href="/category/{{ cat }}/">
                     {{ cat | replace: '-', ' ' | upcase }}
+                    <span class="category-count">({{ post_count }})</span>
                   </a>
                 </li>
               {% endfor %}
@@ -47,6 +50,7 @@
         {% endfor %}
       </ul>
     </nav>
+
 
     <main>
         {{ content }}
