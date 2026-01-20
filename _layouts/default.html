@@ -21,19 +21,28 @@
   <div class="layout">
     <nav class="sidebar">
       <div class="sidebar-title">Categories</div>
+    
       <ul class="sidebar-section">
         {% for section in site.category_tree %}
-          <li class="sidebar-section-title">
-            {{ section[1].title }}
+          <li class="sidebar-section-item">
+    
+            <!-- 범주 헤더 -->
+            <button class="sidebar-section-toggle">
+              <span class="arrow">▶</span>
+              <span class="section-title">{{ section[1].title }}</span>
+            </button>
+    
+            <!-- 하위 카테고리 -->
             <ul class="sidebar-sub">
               {% for cat in section[1].children %}
-                <li>
+                <li class="sidebar-category-item">
                   <a href="/category/{{ cat }}/">
                     {{ cat | replace: '-', ' ' | upcase }}
                   </a>
                 </li>
               {% endfor %}
             </ul>
+    
           </li>
         {% endfor %}
       </ul>
