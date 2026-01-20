@@ -4,6 +4,7 @@ title: generative ai paper review
 paper: "Bias and Fairness in Diffusion Models"
 category: generative-ai
 link: https://arxiv.org/abs/xxxx.xxxxx
+summury: This is summmmmm
 ---
 
 ## Problem Setting
