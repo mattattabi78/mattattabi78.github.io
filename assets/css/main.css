@@ -5,7 +5,7 @@
 body {
   margin: 0;
   padding: 40px 20px;
-  font-family: "Libre Baskerville", "Times New Roman", serif;
+  font-family: 'Noto Sans KR', 'Nanum Gothic', 'Apple SD Gothic Neo', sans-serif;
   background: #ffffff;
   color: #111;
 }
