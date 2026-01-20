@@ -53,5 +53,19 @@
     </main>
 
   </div>
+  
+  <script> 
+    // script for active sidebar
+    document.addEventListener("DOMContentLoaded", function () {
+      const toggles = document.querySelectorAll(".sidebar-section-toggle");
+
+      toggles.forEach(toggle => {
+        toggle.addEventListener("click", () => {
+          const section = toggle.closest(".sidebar-section-item");
+          section.classList.toggle("open");
+        });
+      });
+    });
+  </script>
 </body>
 </html>
