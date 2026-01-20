@@ -1,62 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>{{ page.title }} · {{ site.title }}</title>
-  <link rel="stylesheet" href="/assets/css/main.css">
 
-  <!-- KaTeX -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
-    onload="renderMathInElement(document.body);"></script>
-</head>
+<h1>{{ page.title }}</h1>
 
-<body>
-  <div class="layout">
-    <!-- 사이드바 (기존 디자인 유지) -->
-    <nav class="sidebar">
-      <div class="sidebar-title">Categories</div>
-      <ul>
-        {% for category in site.categories %}
-          {% assign cat_name = category[0] %}
-        <!--
-          <li>
-            <a href="/category/{{ cat_name | downcase }}/">
-              {{ cat_name | capitalize }}
-            </a>
-          </li>
-        -->
-          <li class="post-item">
-            <a class="post-title" href="{{ post.url }}">
-              {{ post.title }}
-            </a>
-        
-            <div class="post-meta">
-              {{ post.date | date: "%Y-%m-%d" }}
-            </div>
-        
-            <div class="post-desc">
-              {{ post.summary | default: post.excerpt | strip_html | truncate: 120 }}
-            </div>
-          </li>
-        {% endfor %}
-      </ul>
-    </nav>
+<ul class="post-list">
+  {% assign posts_in_cat = site.categories[page.category] %}
+  {% for post in posts_in_cat %}
+    <li class="post-item">
+      <a class="post-title" href="{{ post.url | relative_url }}">
+        {{ post.title }}
+      </a>
 
-    <!-- 카테고리 포스트 리스트 -->
-    <main>
-      <h1>{{ page.title }}</h1>
-      <ul>
-        {% assign posts_in_cat = site.categories[page.category] %}
-        {% for post in posts_in_cat %}
-          <li>
-            <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-            <span>({{ post.date | date: "%Y-%m-%d" }})</span>
-          </li>
-        {% endfor %}
-      </ul>
-    </main>
-  </div>
-</body>
-</html>
+      <div class="post-meta">
+        {{ post.date | date: "%Y-%m-%d" }}
+      </div>
+
+      <div class="post-desc">
+        {{ post.summary | default: post.excerpt | strip_html | truncate: 120 }}
+      </div>
+    </li>
+  {% endfor %}
+</ul>
