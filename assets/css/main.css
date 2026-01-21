@@ -147,7 +147,7 @@ body {
 
 
 .right-sidebar img {
-  width: 100%;
+  max-width: 95%;
   height: auto;
   border-radius: 6px;
 }
