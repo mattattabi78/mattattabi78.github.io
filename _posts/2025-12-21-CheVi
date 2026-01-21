@@ -1,0 +1,143 @@
+---
+layout: post
+title: CheVi: Chess vision model
+paper: "Chess Model based on ViT and ligth weight MLP and CNN"
+category: project
+summary: Chess Model based on ViT and ligth weight MLP and CNN
+---
+
+## Abstract
+
+Recent deep learning research has achieved remarkable progress, particularly in the field of computer vision. Vision model have increasingly served as substitutes for human visual perception, exerting significant influence across a wide range of tasks such as image classification, object detection, and image generation. As these models continue to advance, new and increasingly challenging tasks are being introduced to probe their limits whether complex vision model, originally designed for visual information processing, can be effectively applied to domains beyond conventional visual tasks.
+**CheVi**(Chess Vision Model) is Vision Transformer(ViT) model trained on chess data, demonstrating notable performance despite its relatively small number of parameters and data. This approach can be interpreted as an attempt to push the representational capacity of ViT models to their limits, and it offers new perspective on the potential applicability of vision models beyond traditional vision domains.
+
+
+## Related Works
+
+Chess is a strategic board game played by two players on an 8×8 board using 12 types of pieces. Each piece follows distinct movement rules, and despite these simple mechanics, the game demands deep long-term planning, tactical calculation, and pattern recognition. Over centuries, chess has evolved into a symbol of human intelligence and strategic reasoning, and today it serves as an important experimental platform in artificial intelligence and cognitive science.
+
+In recent years, chess has been widely used as a benchmark environment for reinforcement learning. Models such as AlphaZero demonstrated that a reinforcement learning algorithm, given only the rules of the game and without any domain-specific engineering or prior knowledge, could surpass the strongest contemporary chess engines. AlphaZero learns a policy and value function defined as
+
+$$
+  fθ(S)=(p,v)f_\theta(S) = (p, v)
+$$
+
+where $$p$$ represents the probability distribution over possible actions in the current state $$s$$, and $$v$$ denotes the expected game outcome from that state.
+
+**AlphaZero** combines Monte Carlo Tree Search with reinforcement learning to achieve its performance. However, despite its success, reinforcement learning suffers from structural limitations: it requires massive amounts of training data and computational resources, is highly sensitive to reward design, and faces challenges in interpretability, generalization, and model compression. Moreover, self-play–based reinforcement learning is particularly inefficient during the early stages of training.
+
+More recently, Daniel Monroe explored an alternative approach that seeks to imitate this reinforcement learning process using Vision Transformers. In this work, the researchers represent the 64 squares of the chessboard as individual tokens and employ self-attention with relative positional encoding to learn spatial relationships. They propose a Transformer-based model, **Chessformer**, which differs from AlphaZero-style approaches that rely heavily on convolutional networks and large-scale search. Instead, Chessformer achieves competitive performance using only supervised learning on policy and value targets derived from self-play data, reframing chess as a representation learning problem over structured board states. This approach demonstrates the potential of integrating visual inductive biases into Transformer architectures and serves as an inspiration for the **CheVi** architecture. Nevertheless, the study has clear limitations: it only takes the board state at a single time step $$t$$ as input, and it does not provide visibility into the explicit reasoning process of selecting which piece to move and where to move it.
+
+Therefore, in this project, I aim to investigate whether vision-based models can truly understand chess by leveraging Vision Transformers together with a **disentangled reasoning architecture**, and to challenge the role traditionally occupied by reinforcement learning approaches.
+
+
+
+## Data preprocessing
+
+![figure1.png](/assets/images/CheVi/figure1.png)
+
+FEN (Forsyth–Edwards Notation) is a standard notation that represents the current state of a chessboard as a single-line string, enabling an efficient description of piece placement. In chess engines and machine learning systems, FEN is widely used as a core state representation for storing, transmitting, and learning board configurations. (2) In this work, convert each FEN state into a fixed-size tensor by applying one-hot encoding over the 12 piece types (6 per side), resulting in a board representation as $$X$$
+
+
+$$
+    X_t \in \mathbb{R}^{12 \times 8 \times 8}.
+$$
+
+
+A single chess game consists of a temporal sequence of $T$ consecutive board states. During training, I split each game into overlapping subsequences of length $S$, which are used as model inputs. Consequently, the input to the model is defined as (3) where $S$ the sequence length.
+
+$$
+    X = {X_t, X_{t+1}, \dots, X_{t+S-1}} \quad ,X \in \mathbb{R}^{ S \times 12 \times 8 \times 8}
+$$
+
+The ground-truth labels are constructed by comparing the last board state in the input sequence $$(X_{t+S-1})$$ with the subsequent state $$(X_{t+S})$$. By identifying the differences between these two consecutive positions, I extract the squares affected by the executed move. Specifically, squares that contain a piece in the previous state but are empty in the next state are defined as the from-squares, and are represented as a binary map in (4) and conversely, squares that are empty in the previous state but become occupied in the next state are defined as the to-squares, and are encoded as (5)
+
+$$
+    Y_{\text{piece}} \in \mathbb{R}^{8 \times 8}
+$$
+
+$$
+    Y_{\text{move}} \in \mathbb{R}^{8 \times 8}
+$$
+
+
+
+The piece-type dimension is collapsed using a logical operation across channels, resulting in sparse target maps with a single activated square per move.
+
+This label formulation decomposes each chess move into two explicit decision stages: **piece selection** and **move selection**. Such a decomposition naturally aligns with the proposed From–To separated architecture, encouraging the model to learn piece selection and movement decisions independently while maintaining a consistent global board representation.
+
+
+
+## Model Architecture
+
+![figure2](/assets/images/CheVi/figure2.png)
+
+CheVi is composed of three clearly decoupled modules—**Encoder**, **From Head**, and **To Head**—each responsible for a distinct stage of decision-making. The encoder adopts a self-attention–based Transformer architecture and takes as input the most recent sequence of $$T$$ chess board states $$X$$. To handle continuous board states and treat each board position as an individual patch, I employ **spatio-temporal** embeddings that explicitly distinguish spatial locations and temporal ordering, following the method of ViViT. This design enables the encoder to integrate both the static configuration of pieces and the dynamic interactions arising from recent moves. Each board state is embedded into a fixed set of 64 tokens corresponding to board squares.
+
+
+$$
+    E_t = \phi(X) \in \mathbb{R}^{64 \times d}
+$$
+
+$$
+    \tilde{E}_t = E_t + P_{\text{space}} + P_{\text{time}}^{(t)}
+$$
+
+
+The encoder output thus forms a structured high-dimensional representation of the current game state. Among the encoder outputs, only the latent representation corresponding to the most recent board state $$z \in \mathbb{R}^{64 \times d}$$, is forwarded to the **From Head**.
+
+$$
+    Z = \mathrm{Encdoer}(\tilde{E}) \in \mathbb{R}^{(64T) \times d}
+$$
+
+
+ The **From Head** is a lightweight classifier composed of two fully connected layers. It predicts a logit for each board square, determining which piece should be moved in the current position. This stage explicitly addresses the question of piece selection, allowing the model to focus on localized decision-making independently of the destination prediction.
+
+$$
+    p = F_{\mathrm{From\ Head}}(z) \in \mathbb{R}^{64}
+$$
+
+
+The latent representation of the selected piece is then used as input to the **To Head**. This block combines the global board embedding produced by the encoder with the selected piece representation and applies convolutional operations to predict the optimal destination square. In particular, the selected piece embedding is broadcast across the full board map and fused with the global context, encouraging the destination prediction to jointly reflect the intrinsic properties of the piece and the overall board situation. Lastly, the overall training objective is defined as the simple sum of the losses from the **From Head** and the **To Head**: $$\mathcal{L} = \mathcal{L}_{\text{from}} + \mathcal{L}_{\text{to}}$$.
+
+$$
+    m = F_{\mathrm{To\ Head}}(z, p) \in \mathbb{R}^{64}.
+$$
+
+
+
+
+This role-separated architecture effectively distributes the prediction burden across modules, in contrast to monolithic designs where a single component is responsible for all decisions. Moreover, the sequential From–To decomposition structurally constrains the action space, reducing the likelihood of rule-breaking moves during probabilistic sampling. Importantly, it also enables step-by-step analysis of how piece selection and destination decisions are formed within the model, thereby substantially improving interpretability.
+
+
+
+## Experiment and Analysis
+
+| Hyperparameter                | Value                    |
+|------------------------------|--------------------------|
+| Batch Size                   | 32                       |
+| Training Epochs              | 15                       |
+| Optimizer                    | AdamW                    |
+| Learning Rate                | 1×10⁻⁴ → 2×10⁻⁵          |
+| Label Smoothing              | 0.2                      |
+| Sequence Length (S)          | 3                        |
+| Embedding Dimension (d)      | 256                      |
+| Number of Encoder Layers     | 12                       |
+| Number of Attention Heads    | 8                        |
+| Dropout Rate                 | 0.2                      |
+| Teacher Forcing              | 1.0 → 0.5                |
+
+Considering the experimental environment, the following hyperparameters were used in table above. Training was conducted on a CoLab A100 GPU for approximately 10 hours, using 45,000 chess games corresponding to an 2200Elo. Due to limitations in the research environment, early stopping was applied once the loss had sufficiently converged; further training is expected to yield additional performance improvements. CheVi demonstrated strong performance in both opening sequences from the start of the game and piece movements in endgame situations.
+
+![figure3](/assets/images/CheVi/figure3.png)
+
+This image illustrates the encoder attention maps for each piece in an endgame position. The black king attends not only to the location of the piece delivering check but also to positions that allow it to evade the check. The black queen and pawns focus on the positions where the check is initiated, and in particular, the queen assigns high attention weights to squares that simultaneously block the check and threaten the white queen. These observations indicate that the model has learned the **movement rules of individual chess pieces** as well as the explicit hierarchical relationships between pieces.
+
+
+
+## Conclusion and Limitatio
+
+Overall, CheVi achieves meaningful performance using a relatively small number of parameters (10.8M) by combining a self-attention–based board encoder with two lightweight prediction heads. Despite this efficiency, the Transformer-based next-token prediction paradigm remains fundamentally limited to imitating subsequent moves, rather than explicitly reasoning about future game states. Whether Transformer architectures genuinely perform chess-specific “thinking” or strategic reasoning therefore requires further investigation.
+
+
+In addition, the model still exhibits a non-negligible error rate during probabilistic sampling. In approximately 100 automatically simulated games, 24.7650 percent of the generated moves were identified as illegal. Most of these invalid moves occurred when the model attempted to move pieces that had already been captured and were no longer present on the board. I expect that such errors can be largely mitigated through the integration of simple rule-based constraints.
