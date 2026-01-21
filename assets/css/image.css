@@ -1,15 +1,23 @@
 .img-small {
   width: 40%;
+  display: block;
+  margin: 0 auto; 
 }
 
 .img-medium {
   width: 65%;
+  display: block;
+  margin: 0 auto; 
 }
 
 .img-large {
   width: 90%;
+  display: block;
+  margin: 0 auto; 
 }
 
 .img-full {
   width: 100%;
+  display: block;
+  margin: 0 auto; 
 }
