@@ -128,6 +128,30 @@ body {
   margin-left: 4px;
 }
 
+
+
+/* =====================================================
+   Right sidebar
+===================================================== */
+
+
+.right-sidebar {
+  width: 140px;              /* 작게 */
+  flex-shrink: 0;            /* 줄어들지 않게 */
+  padding-left: 16px;
+  border-left: 1px solid #eee;
+  display: flex;
+  align-items: flex-start;
+}
+
+.right-sidebar img {
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+}
+
+
+
 /* =====================================================
    Main
 ===================================================== */
