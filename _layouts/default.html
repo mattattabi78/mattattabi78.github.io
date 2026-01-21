@@ -25,18 +25,27 @@
       <ul class="sidebar-section">
         {% for section in site.category_tree %}
           <li class="sidebar-section-item">
-    
+      
+            {% assign section_post_count = 0 %}
+            {% for cat in section[1].children %}
+              {% assign count = site.categories[cat] | size %}
+              {% assign section_post_count = section_post_count | plus: count %}
+            {% endfor %}
+      
             <!-- 범주 헤더 -->
             <button class="sidebar-section-toggle">
               <span class="arrow">▶</span>
-              <span class="section-title">{{ section[1].title }}</span>
+              <span class="section-title">
+                {{ section[1].title }}
+                <span class="category-count">({{ section_post_count }})</span>
+              </span>
             </button>
-    
+      
             <!-- 하위 카테고리 -->
             <ul class="sidebar-sub">
               {% for cat in section[1].children %}
                 {% assign post_count = site.categories[cat] | size %}
-    
+      
                 <li class="sidebar-category-item">
                   <a href="/category/{{ cat }}/">
                     {{ cat | replace: '-', ' ' | upcase }}
@@ -45,10 +54,11 @@
                 </li>
               {% endfor %}
             </ul>
-    
+      
           </li>
         {% endfor %}
       </ul>
+
     </nav>
 
 
