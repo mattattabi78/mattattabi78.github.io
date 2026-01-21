@@ -6,6 +6,41 @@ layout: default
   <a href="/">← Home</a>
 </nav>
 
+{% assign current_category = page.category %}
+{% assign category_posts = site.posts | where: "category", current_category %}
+
+{% for post in category_posts %}
+  {% if post.url == page.url %}
+    {% assign index = forloop.index0 %}
+  {% endif %}
+{% endfor %}
+
+{% assign prev_index = index | minus: 1 %}
+{% assign next_index = index | plus: 1 %}
+
+{% if prev_index >= 0 or next_index < category_posts.size %}
+<nav class="post-pagination">
+  <div class="post-prev">
+    {% if prev_index >= 0 %}
+      {% assign prev_post = category_posts[prev_index] %}
+      <a href="{{ prev_post.url }}">
+        ← {{ prev_post.title }}
+      </a>
+    {% endif %}
+  </div>
+
+  <div class="post-next">
+    {% if next_index < category_posts.size %}
+      {% assign next_post = category_posts[next_index] %}
+      <a href="{{ next_post.url }}">
+        {{ next_post.title }} →
+      </a>
+    {% endif %}
+  </div>
+</nav>
+{% endif %}
+
+
 <article>
   <header>
     <h1>{{ page.title }}</h1>
