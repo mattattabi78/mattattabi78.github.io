@@ -6,7 +6,7 @@ markdown: kramdown
 highlighter: rouge
 
 kramdown:
-  math_engine: katex
+  math_engine: mathjax
 
 permalink: /:year/:month/:day/:title/
 
