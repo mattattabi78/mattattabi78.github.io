@@ -145,6 +145,12 @@ body {
   align-items: flex-start;
 }
 
+.right-sidebar-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
 
 .right-sidebar img {
   max-width: 95%;
@@ -152,7 +158,12 @@ body {
   border-radius: 6px;
 }
 
-
+.right-sidebar-text {
+  font-size: 0.75em;
+  line-height: 1.4;
+  color: #666;
+  text-align: center;
+}
 
 /* =====================================================
    Main
