@@ -17,7 +17,7 @@ body {
 .layout {
   display: flex;
   max-width: 1000px;
-  margin: auto;
+  margin: 10;
   gap: 32px;
 }
 
