@@ -138,6 +138,12 @@ main {
   border-left: 1px solid #eee;   /* 사이드바와 메인 구분선 */
 }
 
+main img {
+  max-width: 100%;   /* 부모(main) 영역보다 넓어지지 않음 */
+  height: auto;      /* 비율 유지 */
+  display: block;    /* 이미지 아래 여백 정리 */
+}
+
 /* 반응형 스타일 (화면 768px 이하) */
 @media (max-width: 768px) {
   .layout {
