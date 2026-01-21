@@ -16,8 +16,8 @@ body {
 
 .layout {
   display: flex;
-  max-width: 1000px;
-  margin: 10;
+  max-width: 100%;
+  margin: 0;
   gap: 32px;
 }
 
@@ -140,9 +140,11 @@ body {
   flex-shrink: 0;            /* 줄어들지 않게 */
   padding-left: 16px;
   border-left: 1px solid #eee;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   display: flex;
   align-items: flex-start;
 }
+
 
 .right-sidebar img {
   width: 100%;
