@@ -134,6 +134,7 @@ body {
 
 main {
   flex: 1;
+  min-width: 0;
   padding-left: 32px;
   border-left: 1px solid #eee;   /* 사이드바와 메인 구분선 */
 }
@@ -155,9 +156,6 @@ main img {
     max-height: 200px;
   }
 
-  main {
-    flex: none;
-  }
 }
 
 
