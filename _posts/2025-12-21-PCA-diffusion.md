@@ -6,7 +6,7 @@ category: project
 summary: Simple Feature Manipulation with PCA in feature space 
 ---
 
-Explainable AI 과목의 기말 과제로 디퓨전 모델의 feature space에서 PCA 연산이 갖는 의의를 탐구하고 이를 활용하여 서로 다른 두 개념을 임의로 섞는 comcept mixture를 해보았다. PCA 자체는 인공지능 수학 수업시간에 배웠지만, 실제로 내가 알고있는 디퓨전 모델에 적용시키고 결과를 볼 때 쾌감이 있었다. 본 프로젝트는 학습 없이도 단순 선형 변환을 통해 디퓨전 모델의 feature들을 의미적으로 정렬할 수 있음을 시사하며 feature space의 각 차원의 분산량에 따라 semantic feature와 visual feature가 어느 정도 구분될 가능성을 암시한다.
+3학년 2학기 Explainable AI 과목의 기말 과제로 디퓨전 모델의 feature space에서 PCA 연산이 갖는 의의를 탐구하고 이를 활용하여 서로 다른 두 개념을 임의로 섞는 comcept mixture를 해보았다. PCA 자체는 인공지능 수학 수업시간에 배웠지만, 실제로 내가 알고있는 디퓨전 모델에 적용시키고 결과를 볼 때 쾌감이 있었다. 본 프로젝트는 학습 없이도 단순 선형 변환을 통해 디퓨전 모델의 feature들을 의미적으로 정렬할 수 있음을 시사하며 feature space의 각 차원의 분산량에 따라 semantic feature와 visual feature가 어느 정도 구분될 가능성을 암시한다.
 
 기말 기간동안 재미있게 프로젝트를 진행했으며 결과적으로 해당 수업에서 1등을 할 수 있었다 v^^v.
 
