@@ -31,11 +31,11 @@ This feature space evolves continuously over time: early diffusion steps primari
 
 ### Principal Component Analysis(PCA)
 
-Principal Component Analysis **PCA** is a linear transformation technique that projects high-dimensional feature spaces into lower-dimensional subspaces while preserving maximal variance. Given a collection of $$l$$-th layer's reshaped features $$h_t^l \in \mathbb{R}^{H*W \times d_l}$$, we construct a feature matrix $$H = [h_{t,1}^l, \dots, h_{t,N}^l]^\top \in \mathbb{R}^{N*H*W \times d_l}$$. PCA identifies principal component vectors $${v_1, \dots, v_k}$$ via eigendecomposition of the covariance matrix $$\Sigma = \frac{1}{N} H^\top H$$.
+Principal Component Analysis **PCA** is a linear transformation technique that projects high-dimensional feature spaces into lower-dimensional subspaces while preserving maximal variance. Given a collection of $$l$$-th layer's reshaped features $$h_t^l \in \mathbb{R}^{H*W \times d_l}$$, I construct a feature matrix $$H = [h_{t,1}^l, \dots, h_{t,N}^l]^\top \in \mathbb{R}^{N*H*W \times d_l}$$. PCA identifies principal component vectors $${v_1, \dots, v_k}$$ via eigendecomposition of the covariance matrix $$\Sigma = \frac{1}{N} H^\top H$$.
+
+
 
 Each principal component $$v_i$$ corresponds to a direction of maximal variance in the feature space, enabling dimensionality reduction to $$k \ll d_l$$ dimensions. In diffusion models, PCA facilitates the analysis of which feature directions at a given timestep $$t$$ dominate key visual attributes such as global structure, color, and texture, and further enables the exploration of concept-specific latent subspaces.
-
-%-------------------------------------------------------------------------
 
 ## Methods
 
@@ -62,11 +62,13 @@ $$
 
 Denote by $$V_t^{(J)} = [v_{t,1}, \dots, v_{t,J}] \in \mathbb{R}^{d_l \times J}  \ \ \ \ \ \ (J \le d_l)$$ the subspace spanned by the top-$$J$$ principal components at step $$t$$. Feature representations are then projected onto this subspace for $$t = 0, \dots, T$$
 
+$$
+\begin{aligned}
+\tilde{h}_{t,i}^{(J)} &= V_t^{(J)} V_t^{(J)\top} h_{t,i}, \\
+\tilde{H}_t^{(J)} &= H_t V_t^{(J)} V_t^{(J)\top}
+\end{aligned}
+$$
 
-$$
-    \tilde{h}_{t,i}^{(J)} &= V_t^{(J)} V_t^{(J)\top} h_{t,i}, \\
-    \tilde{H}_t^{(J)} &= H_t V_t^{(J)} V_t^{(J)\top}
-$$
 
 
 
@@ -81,6 +83,7 @@ By reconstructing features using different subsets of principal components and c
 ### Abstracting to single step $$t$$#
 
 <img src="/assets/images/diffusion_PCA/poster.png" class="img-medium" alt="Figure 1">
+
 **FIGURE1**: Feature abstraction. Reconstruction results obtained by applying low-rank approximation to various images using different types of principal components at step 0.
 
 By performing a low-rank approximation, in specific diffusion step along $$J$$ selected principal component directions, we can visually inspect the role of each principal component $$v_{t,j}$$.
@@ -92,17 +95,20 @@ A notable observation is that, as indicated in image below, even when projecting
 This interpretation is consistent with prior studies and can be regarded as an empirical, example-level demonstration of phenomena that were previously established through rigorous mathematical analysis using Riemannian geometry. Furthermore, this behavior aligns closely with the effective rank values computed at early diffusion steps, as shown in below.
 
 <img src="/assets/images/diffusion_PCA/image3.png" class="img-small" alt="Figure 2.1">
+
 **FIGURE2.1**: A log-scaled plot showing the variation of eigenvalues corresponding to principal components at each denoising step.
 
 
 <img src="/assets/images/diffusion_PCA/image5.png" class="img-small" alt="Figure 2.2">
+
 **FIGURE2.2**: Change in the effective rank of the eigenvector matrix across timesteps.
 
 
 ### Abstracting to whole step $$T$$
 
 <img src="/assets/images/diffusion_PCA/image1.png" class="img-medium" alt="Figure 3">
-**FIGURE3*: This figure shows the reconstructed images obtained by projecting the features onto the top $$J$$ principal components at every step of the denoising process. As $$J$$ decreases, the images become increasingly noisy.
+
+**FIGURE3**: This figure shows the reconstructed images obtained by projecting the features onto the top $$J$$ principal components at every step of the denoising process. As $$J$$ decreases, the images become increasingly noisy.
 
 It can be expanded and enables the analysis of the continuous contribution of principal components by applying a low-rank approximation along $$J$$ selected principal directions at every diffusion step. This analysis assumes that the principal subspaces at consecutive steps $$t$$ and $$t'$$ are aligned. I verify this assumption by measuring the Frobenius-overlap-based subspace similarity between PCA-induced channel subspaces:
 
@@ -120,6 +126,7 @@ Above figure shows reconstructions obtained by projecting features at each step 
 ### Role of the 0th Principal Component
 
 <img src="/assets/images/diffusion_PCA/image2.png" class="img-medium" alt="Figure 4">
+
 **FIGURE4**: Reconstruction with the 0th principal component removed during the denoising process.
 
 
@@ -138,7 +145,7 @@ This paper demonstrates an **Abstracting mixture**, which allows the blending of
 For instance, by replacing the top $$J$$ principal components of features in a generation trajectory for ‘rose’ with those used to generate ‘tree’, one can effectively blend the abstracted semantics of the two concepts. This shows several examples of images generated using this Abstracting mixture. Interestingly, visual features such as color, which are typically considered low-level, emerge even from relatively low-ranked principal components, highlighting a notable finding about the hierarchical organization of semantic and visual features within the diffusion model’s feature space.
 
 
-\section{Conclusion}
+## Conclusion
 
 This study systematically investigates the feature space of diffusion models, using PCA-based analysis and low-rank approximation during the generation process. This experiments show that a small number of top principal components preserve most of the semantic structure of generated images, while lower-ranked components primarily refine details or contribute to noise removal. This indicates that diffusion models operate along a relatively low-dimensional semantic manifold at each step, rather than exploring the full high-dimensional space with example based methods. 
 
