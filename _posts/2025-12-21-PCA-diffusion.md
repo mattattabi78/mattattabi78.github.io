@@ -31,7 +31,7 @@ This feature space evolves continuously over time: early diffusion steps primari
 
 ### Principal Component Analysis(PCA)
 
-Principal Component Analysis **PCA** is a linear transformation technique that projects high-dimensional feature spaces into lower-dimensional subspaces while preserving maximal variance. Given a collection of $$l$$-th layer's reshaped features $$h_t^l \in \mathbb{R}^{H*W \times d_l}$$, I construct a feature matrix $$H = [h_{t,1}^l, \dots, h_{t,N}^l]^\top \in \mathbb{R}^{N*H*W \times d_l}$$. PCA identifies principal component vectors $${v_1, \dots, v_k}$$ via eigendecomposition of the covariance matrix $$\Sigma = \frac{1}{N} H^\top H$$.
+Principal Component Analysis **PCA** is a linear transformation technique that projects high-dimensional feature spaces into lower-dimensional subspaces while preserving maximal variance. Given a collection of $$l$$-th layer's reshaped features $$h_t^l \in \mathbb{R}^{H * W \times d_l}$$, I construct a feature matrix $$H = [h_{t,1}^l, \dots, h_{t,N}^l]^\top \in \mathbb{R}^{N * H * W \times d_l}$$. PCA identifies principal component vectors $${v_1, \dots, v_k}$$ via eigendecomposition of the covariance matrix $$\Sigma = \frac{1}{N} H^\top H$$.
 
 
 
