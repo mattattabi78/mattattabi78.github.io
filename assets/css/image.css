@@ -21,3 +21,14 @@
   display: block;
   margin: 0 auto; 
 }
+
+
+.table-center {
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0;
+}
+
+.table-center table {
+  width: auto;
+}
