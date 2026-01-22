@@ -20,23 +20,23 @@ layout: default
 
 {% if prev_index >= 0 or next_index < category_posts.size %}
 <nav class="post-pagination">
-  <div class="post-prev">
-    {% if prev_index >= 0 %}
-      {% assign prev_post = category_posts[prev_index] %}
-      <a href="{{ prev_post.url }}">
-        ← {{ prev_post.title }}
-      </a>
-    {% endif %}
-  </div>
 
-  <div class="post-next">
-    {% if next_index < category_posts.size %}
-      {% assign next_post = category_posts[next_index] %}
-      <a href="{{ next_post.url }}">
-        {{ next_post.title }} →
-      </a>
-    {% endif %}
-  </div>
+  {% if prev_index >= 0 %}
+    {% assign prev_post = category_posts[prev_index] %}
+    <a class="post-card prev" href="{{ prev_post.url }}">
+      <span class="post-label">Previous Post</span>
+      <span class="post-title">← {{ prev_post.title }}</span>
+    </a>
+  {% endif %}
+
+  {% if next_index < category_posts.size %}
+    {% assign next_post = category_posts[next_index] %}
+    <a class="post-card next" href="{{ next_post.url }}">
+      <span class="post-label">Next Post</span>
+      <span class="post-title">{{ next_post.title }} →</span>
+    </a>
+  {% endif %}
+
 </nav>
 {% endif %}
 
