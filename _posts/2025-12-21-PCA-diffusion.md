@@ -6,9 +6,14 @@ category: project
 summary: Simple Feature Manipulation with PCA in feature space 
 ---
 
+Explainable AI 과목의 기말 과제로 디퓨전 모델의 feature space에서 PCA 연산이 갖는 의의를 탐구하고 이를 활용하여 서로 다른 두 개념을 임의로 섞는 comcept mixture를 해보았다. PCA 자체는 인공지능 수학 수업시간에 배웠지만, 실제로 내가 알고있는 디퓨전 모델에 적용시키고 결과를 볼 때 쾌감이 있었다. 본 프로젝트는 학습 없이도 단순 선형 변환을 통해 디퓨전 모델의 feature들을 의미적으로 정렬할 수 있음을 시사하며 feature space의 각 차원의 분산량에 따라 semantic feature와 visual feature가 어느 정도 구분될 가능성을 암시한다.
+
+기말 기간동안 재미있게 프로젝트를 진행했으며 결과적으로 해당 수업에서 1등을 할 수 있었다 v^^v.
+
+
 <img src="/assets/images/diffusion_PCA/image8.png" class="img-medium" alt="Poster">
 
-## abstract
+## Abstract
 Recently, there has been an increasing number of attempts to directly manipulate or analyze the feature space of diffusion models. Such efforts are akin to uncovering the hidden rules within the denoising process of these models. In this study, building on this spirit, systematically observed the changes that occur during reconstruction by performing low-rank approximations along the principal component directions of the diffusion model feature space, a process we refer to as Abstraction. This experimental results show that a small number of leading principal components are sufficient to preserve the core semantic structure of images, while lower-ranked components mainly contribute to fine textures and noise removal. Furthermore, through Abstracting Mixture experiments, I demonstrated that replacing top principal components allows for the effective blending of semantics from different concepts. This indicates that PCA-based low-rank analysis can be applied not only for structural exploration but also for image editing and semantic feature control. Overall, this study presents a method for visually analyzing and understanding the structure and semantic roles of the feature space in diffusion models using relatively simple linear tools.
 
 
