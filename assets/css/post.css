@@ -5,30 +5,51 @@
   margin-top: 4rem;
   padding-top: 2rem;
   border-top: 1px solid #eee;
-  font-size: 0.95rem;
 }
 
-.post-prev,
-.post-next {
+/* 카드 자체가 flex item */
+.post-card {
   width: 48%;
+  padding: 16px 18px;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #111;
+
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  transition: border-color 0.2s ease, background 0.2s ease;
 }
 
-.post-prev {
+.post-card:hover {
+  border-color: #bbb;
+  background: #fafafa;
+}
+
+/* 방향성만 담당 */
+.post-card.prev {
   text-align: left;
 }
 
-.post-next {
+.post-card.next {
   text-align: right;
 }
 
-.post-pagination a {
-  text-decoration: none;
-  color: #333;
+.post-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #999;
 }
 
-.post-pagination a:hover {
-  text-decoration: underline;
+.post-title {
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1.4;
 }
+
 
 /* =====================================================
    Post List (index / category)
