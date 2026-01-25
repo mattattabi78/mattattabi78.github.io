@@ -46,9 +46,9 @@ In here, just vision model is hard to convey explicit semantic information of ta
 
 ## Intermediate Scale State Modeling
 
-Paper propose to bridge the gap between a target HR image $x_H \in \mathbb R^{d_i}$ and inout LR image $x_L \in \mathbb R^{d_0}$ with intermediate Scale state $x_i \in \mathbb R^{d_i}$.
+Paper propose to bridge the gap between a target HR image $$x_H \in \mathbb R^{d_i}$$ and inout LR image $$x_L \in \mathbb R^{d_0}$$ with intermediate Scale state $$x_i \in \mathbb R^{d_i}$$.
 
-To reduce hallucinations caused by incorrect text guidance across scale, they used non-Markov multi-scale aware. $x_{i-1}$ and $x_{i-2}$ are input when generating prompt with VLM.
+To reduce hallucinations caused by incorrect text guidance across scale, they used non-Markov multi-scale aware. $$x_{i-1}$$ and $$x_{i-2}$$ are input when generating prompt with VLM.
 
 $$
 P(x_0, x_1, \dots, x_{n}) = p(x_0, x_1) \prod_{i=2}^{n}p(x_i | x_{i-1}, x_{i-2})
