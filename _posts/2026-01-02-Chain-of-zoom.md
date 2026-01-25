@@ -3,7 +3,7 @@ layout: post
 title: "Chain-of-Zoom: Extreme Super-Resolution via Scale Autoregression and Preference Alignment"
 paper: "Chain-of-Zoom: Extreme Super-Resolution via Scale Autoregression and Preference Alignment(NeurIPS 2025) - KAIST"
 category: computer-vision
-summary: paper reivew of chain of zoom
+summary: paper reivew of "chain of zoom"
 link: https://arxiv.org/pdf/2505.18600
 ---
 
