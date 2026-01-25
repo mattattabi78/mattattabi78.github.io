@@ -7,7 +7,7 @@ layout: default
 </nav>
 
 {% assign current_category = page.category %}
-{% assign category_posts = site.posts | where: "category", current_category %}
+{% assign category_posts = site.posts | where: "category", current_category | reverse %}
 
 {% for post in category_posts %}
   {% if post.url == page.url %}
@@ -18,10 +18,9 @@ layout: default
 {% assign prev_index = index | minus: 1 %}
 {% assign next_index = index | plus: 1 %}
 
-{% if prev_index >= 0 or next_index < category_posts.size %}
 <nav class="post-pagination">
-  
-    <div class="post-prev">
+
+  <div class="post-prev">
     {% if prev_index >= 0 %}
       {% assign prev_post = category_posts[prev_index] %}
       <a class="post-card prev" href="{{ prev_post.url }}">
@@ -44,9 +43,8 @@ layout: default
       <div class="post-card next empty"></div>
     {% endif %}
   </div>
-    
+
 </nav>
-{% endif %}
 
 
 <article>
