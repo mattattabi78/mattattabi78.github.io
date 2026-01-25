@@ -19,31 +19,26 @@ layout: default
 {% assign next_index = index | plus: 1 %}
 
 <nav class="post-pagination">
+  {% assign prev_post = category_posts[prev_index] %}
+  {% assign next_post = category_posts[next_index] %}
 
-  <div class="post-prev">
-    {% if prev_index >= 0 %}
-      {% assign prev_post = category_posts[prev_index] %}
-      <a class="post-card prev" href="{{ prev_post.url }}">
-        <span class="post-label">Previous Post</span>
-        <span class="post-title">← {{ prev_post.title }}</span>
-      </a>
-    {% else %}
-      <div class="post-card prev empty"></div>
-    {% endif %}
-  </div>
+  {% if prev_post %}
+    <a class="post-card prev" href="{{ prev_post.url }}">
+      <span class="post-label">Previous Post</span>
+      <span class="post-title">← {{ prev_post.title }}</span>
+    </a>
+  {% else %}
+    <div class="post-card prev empty"></div>
+  {% endif %}
 
-  <div class="post-next">
-    {% if next_index < category_posts.size %}
-      {% assign next_post = category_posts[next_index] %}
-      <a class="post-card next" href="{{ next_post.url }}">
-        <span class="post-label">Next Post</span>
-        <span class="post-title">{{ next_post.title }} →</span>
-      </a>
-    {% else %}
-      <div class="post-card next empty"></div>
-    {% endif %}
-  </div>
-
+  {% if next_post %}
+    <a class="post-card next" href="{{ next_post.url }}">
+      <span class="post-label">Next Post</span>
+      <span class="post-title">{{ next_post.title }} →</span>
+    </a>
+  {% else %}
+    <div class="post-card next empty"></div>
+  {% endif %}
 </nav>
 
 
