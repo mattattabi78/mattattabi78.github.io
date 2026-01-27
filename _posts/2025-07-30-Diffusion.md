@@ -178,7 +178,7 @@ Pure diffusion model is trained to predict $$\mu_\theta(x_t, t)$$ and $$\epsilon
 
 ### Objective function
 
-By doing this, final objective function is $$MSE$$ loss of $\epsilon$.
+By doing this, final objective function is $$MSE$$ loss of $$\epsilon$$.
 
 $$
   L_{\mathrm{simple}}(θ) := E_{t,x_0 ,ϵ} \Bigr[|| ϵ−ϵ_θ(\sqrt{\bar{\alpha_t}} x_0 + \sqrt{1−\bar{\alpha}_t}ϵ,t)||^2 \Bigr]
@@ -186,13 +186,13 @@ $$
 
 Additionally, researcher set down-weights in small $$t$$ that very small amounts of noise, to focus on more difficult denoising tasks at larger $$t$$ terms.
 
-### Meaning of $\theta$
+### Meaning of $$\theta$$
 
 In diffusion model’s training, given noise map from forward process( $$x_t= \sqrt{\bar{α}_t} x_0 + \sqrt{1−\bar{α}_t} \epsilon$$ ) thus, $$\epsilon_\theta$$ that model predict is noise map per coordinate of whole images. And in here, $$\theta$$ as weight of networks, like CNN filter. 
 
----
 
 ---
+
 
 # Denoising Diffusion Implicit Models
 
@@ -206,11 +206,11 @@ From a variational perspective, a large T allows the reverse process to be close
 
 ## Non-Markov process
 
-Actually, Loss function $$L_\gamma$$ depend on the marginals probability likes $$q(x_t|x_0)$$, not directly on the joint $$q(x_{1:T}|x_0)$$. That means model do not need to consider every before time steps when generate image in $$t$$. 
+Actually, Loss function $$L_\gamma$$ depend on the marginals probability likes $$q(x_t \mid x_0)$$, not directly on the joint $$q(x_{1:T} \mid x_0)$$. That means model do not need to consider every before time steps when generate image in $$t$$. 
 
 Let consider a family $$\mathcal Q$$ of inference distribution, indexed by real vector $$\sigma \in \mathbb R^T_{\ge 0}$$
 
-- $$\mathcal Q$$: A defined family of inference distribution adjusted by $$\sigma$$. Given real data $$x_0$$, inference distribution is distribution of middle steps $$x_1, x_2, …, x_T$$ that generated with some noise which represented by $$q(x_{1:T}|x_0)$$ in DDPM.
+- $$\mathcal Q$$: A defined family of inference distribution adjusted by $$\sigma$$. Given real data $$x_0$$, inference distribution is distribution of middle steps $$x_1, x_2, …, x_T$$ that generated with some noise which represented by $$q(x_{1:T} \mid x_0)$$ in DDPM.
 - $$\sigma = (\sigma_1, \sigma_2, ...,\sigma_T)$$ is hyper parameter vector set of how much noise to add in forward process per time step. Bigger $$\sigma$$ add more noise.
 
 Now, we can rewrite inference distribution like below.
@@ -232,7 +232,7 @@ $$
 
 ### Mean function
 
-Mean function is needed to order to ensure that $$q_\sigma(x_t | x_0) = \mathcal N(\sqrt{\alpha_t}x_0, (1-\alpha_t)I)$$ for all $$t$$. This means all $$t$$ in forward process, distributions of $$x_t$$ have to same. And again, this means each distribution per $$t$$ have to share same equation that represented like above. Mean function align whole distribution of each time step in non-Markovian forward process which $$x_t$$ depends on $$x_{t-1}$$
+Mean function is needed to order to ensure that $$q_\sigma(x_t \mid x_0) = \mathcal N(\sqrt{\alpha_t}x_0, (1-\alpha_t)I)$$ for all $$t$$. This means all $$t$$ in forward process, distributions of $$x_t$$ have to same. And again, this means each distribution per $$t$$ have to share same equation that represented like above. Mean function align whole distribution of each time step in non-Markovian forward process which $$x_t$$ depends on $$x_{t-1}$$
 
 ### Role of $$\sigma$$
 
@@ -242,17 +242,14 @@ $$\sigma$$ regulates stochasticity of forward process. if $$\sigma = 0$$, note t
 
 ---
 
-# LDM
-
-High-Resolution Image Synthesis with Latent Diffusion Models
-
+# High-Resolution Image Synthesis with Latent Diffusion Models
 [paper link](https://arxiv.org/pdf/2112.10752)
 
 Diffusion model are strong but still require amount of high computational resource to synthesis. To increase the accessibility of this powerful model class and at the same time reduce its significant resource consumption, new method is needed that reduces the computational complexity for both training and sampling. (DDIM give faster inferencing but not in training.)
 
 <img src="/assets/images/Diffusion model/3.png" class="img-medium" alt="Figure 3">
 
-## Departure to Latent Space (1)
+## Departure to Latent Space
 
 Researchers analysis diffusion model with tho step.  
 
@@ -268,7 +265,7 @@ And researcher address condensed training only **semantic compression** period w
 
 First at all, they train auto encoder that provide a lower dimensional representational space which is perceptually equivalent to data space. With lower dimensional representational space provide lower complexity of computation, and once trained auto encoder can adapted in any task of various diffusion model. Mapping image data to latent space means efficient connecting with text encoding and other domain. According to above, they propose Latent diffusion model that separated compression from generative learning phase.
 
-### Perceptual Image Compression(3.1)
+### Perceptual Image Compression
 
 Auto encoder for LDM based on combination of perceptual loss and patch-based adversarial objective function.
 
@@ -319,6 +316,3 @@ $$
 
 conditioned LDMs either via concatenation or by more general cross-attention mechanism
 
----
-
----
