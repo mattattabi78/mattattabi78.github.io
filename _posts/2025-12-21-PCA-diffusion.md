@@ -85,7 +85,7 @@ By reconstructing features using different subsets of principal components and c
 
 ## Experiments
 
-### Abstracting to single step $$t$$#
+### Abstracting to single step $$t$$
 
 <img src="/assets/images/diffusion_PCA/poster.png" class="img-medium" alt="Figure 1">
 
