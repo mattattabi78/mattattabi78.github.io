@@ -49,10 +49,10 @@ $$
 \mathrm{Cov}(x_2, x_1) & \mathrm{Var}(x_2) & \cdots \\
 \vdots & \vdots & \ddots
 \end{bmatrix} \in \mathbb R^{d \times d}
-
 $$
 
 This matrix describes the spread in each dimension(diagonal elements) and linear relationships between dimensions(non-diagonal elements).  And Covariance matrix also can means **centered second moment matrix**. The second moment matrix of $$x$$ is $$\mathbb E [xx^T]$$ and cov matrix $$\Sigma$$ is $$\mathbb E [xx^T] - \mu \mu^T$$. These attributes is fundamental in multivariate statistics, Multivariate Guassian distributions and feature analysis.
+
 
 **Geometrical Understand of Covariance Matrix**
 
@@ -60,6 +60,7 @@ In geometrically, covariance matrix define **ellipsoid structure** of data. Cons
 
 - Eigenvector of it → direction of spread
 - Eigenvalue of it → magnitude of correspond eigenvector
+
 
 **Attribute of Covariance Matrix**
 
@@ -154,10 +155,10 @@ Kalman Filter is an recursive algorithm that estimate data under assumption that
 
 The detail will be treated in future…
 
-** Citation ** 
-(https://en.wikipedia.org/wiki/Covariance)
+**Citation** 
+[https://en.wikipedia.org/wiki/Covariance](https://en.wikipedia.org/wiki/Covariance)
 
-(https://en.wikipedia.org/wiki/Multivariate_normal_distribution)
+[https://en.wikipedia.org/wiki/Multivariate_normal_distribution](https://en.wikipedia.org/wiki/Multivariate_normal_distribution)
 
 [https://thekalmanfilter.com/covariance-matrix-explained/](https://thekalmanfilter.com/covariance-matrix-explained/)
 
