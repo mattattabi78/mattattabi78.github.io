@@ -9,17 +9,29 @@ title: Home
 <ul class="post-list">
 {% for post in site.posts %}
   <li class="post-item">
-    <a class="post-title" href="{{ post.url }}">
-      {{ post.title }}
-    </a>
 
-    <div class="post-meta">
-      {{ post.date | date: "%Y-%m-%d" }}
+    {% if post.thumbnail %}
+      <div class="post-thumb">
+        <a href="{{ post.url | relative_url }}">
+          <img src="{{ post.thumbnail | relative_url }}" alt="{{ post.title }}">
+        </a>
+      </div>
+    {% endif %}
+
+    <div class="post-content">
+      <a class="post-title" href="{{ post.url | relative_url }}">
+        {{ post.title }}
+      </a>
+
+      <div class="post-meta">
+        {{ post.date | date: "%Y-%m-%d" }}
+      </div>
+
+      <div class="post-desc">
+        {{ post.summary | default: post.excerpt | strip_html | truncate: 120 }}
+      </div>
     </div>
 
-    <div class="post-desc">
-      {{ post.summary | default: post.excerpt | strip_html | truncate: 120 }}
-    </div>
   </li>
 {% endfor %}
 </ul>
