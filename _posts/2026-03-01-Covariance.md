@@ -104,7 +104,7 @@ More about PCA will be introduced in feature post.
 
 A multivariate Gaussian Distribution is a probability distribution over vectors $$x \in \mathbb R ^k$$, it is writtens as $$x \sim \mathcal N(\mu, \Sigma)$$ with k-dimensional mean vector $$\mu = (\mathbb E[X_1], … , \mathbb E[X_k])$$.
 
-<img src="/assets/images/Covariance/figure2.png" class="img-small" alt="Figure 2">
+<img src="/assets/images/Covariance/image2.png" class="img-small" alt="Figure 2">
 
 And the density function $$p(x)$$ is defined by below with **quadratic form** of covariance
 
