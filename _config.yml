@@ -17,7 +17,7 @@ plugins:
 category_tree:
   Study:
     title: Study
-    childern:
+    children:
       - math
 
   paper-review:
