@@ -2,6 +2,7 @@
 layout: post
 title: "Covariance & Covariance Matrix"
 category: math
+summary: funfun covariance
 ---
 
 그동안 배웠던, 지나가면서 봤던, 혹은, 관심이 가는 수학 개념들을 차례대로 정리해보려고 한다. 첫 번째는 공분산 행렬과 그 친구들이다. 실제로 쓰고 있는 논문이나 진행 중인 프로젝트에 쓰일 일은 적지만, 새로운 개념을 이해하고 정리하면서 많은 재미를 느끼는 것 같다.
