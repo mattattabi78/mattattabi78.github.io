@@ -15,6 +15,11 @@ plugins:
 
 
 category_tree:
+  Study:
+    title: Study
+    childern:
+      - math
+
   paper-review:
     title: Paper Review
     children:
