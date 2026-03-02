@@ -96,6 +96,18 @@
   color: #444;
 }
 
+
+.post-thumb img {
+  width: 160px;
+  height: 110px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.post-content {
+  flex: 1;
+}
+
 /* =====================================================
    Post Navigation (Home link)
 ===================================================== */
