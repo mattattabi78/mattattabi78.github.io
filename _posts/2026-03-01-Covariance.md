@@ -11,7 +11,7 @@ summary: funfun covariance
 
 “Covariance is measure of the joint variability of two random variables. The sign of the covariance shows the tendency in the linear relationship between the variables” - WIKIPEDIA 
 
-## Definition of Covariance
+## 1. Definition of Covariance
 
 For two jointly distributed real-valued random variables $$X$$ and $$Y$$ with finite second moments $$( \mathbb E [X^2] < ∞ )$$, the covariance is defined as the expected value of the product of their deviations from their individual expected values.
 
@@ -29,7 +29,7 @@ $$
 
 Covariance is positive when variables tend to show similar behavior and negative when variable then to show opposite behavior. 
 
-## Meanings of Covariance
+## 2. Meanings of Covariance
 
 The magnitude of the covariance is the geometric mean of the variance that are shared for the two random variables.
 
@@ -39,7 +39,7 @@ A larger magnitude means to variables more strongly depend on each other, smalle
 
 And we can say the variance of $$X$$ is special case of covariance. $$\mathrm{Var}(X) = \mathrm{Cov}(X, X)$$
 
-## About Covariance Matrix
+## 3. About Covariance Matrix
 
 For a given vector $$x \in \mathbb R^d$$, covariance matrix can be denoted as…
 
@@ -78,11 +78,11 @@ The determinant $$\mathrm{det}(\Sigma)$$ represents the squared volume of the el
 - Large determinant → data spread widely
 - Small determinant → data is concentrated
 
-## Usage
+## 4. Usage
 
 Now, let see the usage of the covariance.
 
-### Principal Component Analysis (PCA)
+### 4-1. Principal Component Analysis (PCA)
 
 PCA can be interpreted as eigendecomposition of data’s covariance matrix. By mean centered data $$x_c$$, since $$\Sigma$$ is symmetric,
 
@@ -102,7 +102,7 @@ which means finding most spread axis of data.
 
 More about PCA will be introduced in feature post.
 
-### Multivariate Gaussian Distributions
+### 4-2. Multivariate Gaussian Distributions
 
 A multivariate Gaussian Distribution is a probability distribution over vectors $$x \in \mathbb R ^k$$, it is writtens as $$x \sim \mathcal N(\mu, \Sigma)$$ with k-dimensional mean vector $$\mu = (\mathbb E[X_1], … , \mathbb E[X_k])$$.
 
@@ -138,7 +138,7 @@ $$
 
 And let $$\Sigma = AA^T$$ so, $$x^T \Sigma^{-1}x = c$$. Where actually $$A$$ is square root matrix of $$\Sigma$$. (remeber $$\Sigma$$ is PSD so it always can be fractorized.)
 
-### Mahalanobis Distance
+### 4-3. Mahalanobis Distance
 
 It is distance adjusted by covariance. 
 
@@ -150,13 +150,13 @@ Mahalanobis distance used in anomaly detection, clustering etc.
 
 Euclidean distance ignored each dimension’s scale and correlation between variables. To adjust these relation between variables, mahalanobis distance reflect data’s own ellipse structure by matrix multiplication of inverse covariance matrix.
 
-### Kalman Filter
+### 4-4. Kalman Filter
 
 Kalman Filter is an recursive algorithm that estimate data under assumption that the data follows linear and gaussian distribution. It estimate joint distribution of present variation based on past one. It assume two model which called prediction model and measurement model.
 
 The detail will be treated in future…
 
-**Citation** 
+## 5. Citation
 
 
 
