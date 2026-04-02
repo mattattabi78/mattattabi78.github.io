@@ -11,7 +11,7 @@ summary: Simple Feature Manipulation with PCA in feature space
 기말 기간동안 재미있게 프로젝트를 진행했으며 결과적으로 해당 수업에서 1등을 할 수 있었다 v^^v.
 
 
-<img src="/assets/images/diffusion_PCA/image8.png" class="img-medium" alt="Poster">
+<img src="/assets/images/diffusion_PCA/poster.png" class="img-medium" alt="Poster">
 
 ## Abstract
 Recently, there has been an increasing number of attempts to directly manipulate or analyze the feature space of diffusion models. Such efforts are akin to uncovering the hidden rules within the denoising process of these models. In this study, building on this spirit, systematically observed the changes that occur during reconstruction by performing low-rank approximations along the principal component directions of the diffusion model feature space, a process we refer to as Abstraction. This experimental results show that a small number of leading principal components are sufficient to preserve the core semantic structure of images, while lower-ranked components mainly contribute to fine textures and noise removal. Furthermore, through Abstracting Mixture experiments, I demonstrated that replacing top principal components allows for the effective blending of semantics from different concepts. This indicates that PCA-based low-rank analysis can be applied not only for structural exploration but also for image editing and semantic feature control. Overall, this study presents a method for visually analyzing and understanding the structure and semantic roles of the feature space in diffusion models using relatively simple linear tools.
@@ -87,7 +87,7 @@ By reconstructing features using different subsets of principal components and c
 
 ### Abstracting to single step $$t$$
 
-<img src="/assets/images/diffusion_PCA/poster.png" class="img-medium" alt="Figure 1">
+<img src="/assets/images/diffusion_PCA/image8.png" class="img-medium" alt="Figure 1">
 
 **FIGURE1**: Feature abstraction. Reconstruction results obtained by applying low-rank approximation to various images using different types of principal components at step 0.
 
@@ -144,6 +144,8 @@ As shown in figure above, removing only the 0th principal component at all steps
 ## Abstracted Feature Mixture
 
 <img src="/assets/images/diffusion_PCA/image6.png" class="img-medium" alt="Figure 5">
+<img src="/assets/images/diffusion_PCA/example.png" class="img-medium" alt="Figure 6">
+
 
 This paper demonstrates an **Abstracting mixture**, which allows the blending of two concepts with entirely different textures and forms using the abstraction process. At every step of the original image generation, features from both the original image and the injecting concept are projected into the channel-wise PCA space $$\mathbb{R}^{d_l}$$. Within this projected space, the top $$J$$ principal component values of the original image are replaced with those of the injecting concept, enabling a simple yet effective mixing of the two concepts. Notably, the longer the injection process continues, the more the resulting image resembles the injecting concept in terms of structure, color, and texture. Consequently, at low $$J$$, the global structure of the injecting concept is reflected, while at higher $$J$$, its color and texture are also preserved.
 
