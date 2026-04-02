@@ -54,7 +54,7 @@ $$
 $$
 
 
-Here, $$h_{t,i} = f_\theta^l(x_t^{(i)}, t)$$ represents the activation of the $$l$$-th layer at diffusion step $$t$$ for the $i$-th sample, $$N$$ is the number of samples, $$d_l$$ is the channel dimensionality of layer $$l$$, and $$x_t^{(i)}$$ is the noisy input at step $$t$$.
+Here, $$h_{t,i} = f_\theta^l(x_t^{(i)}, t)$$ represents the activation of the $$l$$-th layer at diffusion step $$t$$ for the $$i$$-th sample, $$N$$ is the number of samples, $$d_l$$ is the channel dimensionality of layer $$l$$, and $$x_t^{(i)}$$ is the noisy input at step $$t$$.
 
 Perform PCA independently at each diffusion step, as the noise distribution and geometric structure of the reverse process vary across timesteps. Let $$H_t \in \mathbb{R}^{N \times d_l}$$ be the matrix obtained by stacking features in $$X_t$$. The covariance matrix and its eigendecomposition are given by for $$j = 1, \dots, d_l$$.
 
