@@ -88,7 +88,7 @@ By reconstructing features using different subsets of principal components and c
 
 ### Abstracting to single step $$t$$
 
-<img src="/assets/images/diffusion_PCA/image8.png" class="img-medium" alt="Figure 1">
+<img src="/assets/images/diffusion_PCA/image8.png" class="img-small" alt="Figure 1">
 
 **FIGURE1**: Feature abstraction. Reconstruction results obtained by applying low-rank approximation to various images using different types of principal components at step 0.
 
