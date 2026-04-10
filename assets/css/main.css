@@ -25,27 +25,18 @@ body {
 
 
 
-
-
 /* =====================================================
    Sidebar (minimal folder style)
 ===================================================== */
 
 .sidebar {
   width: 200px;       /* 기본 폭 */
-
   overflow-y: auto;
   font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   padding: 1rem;
-
-  transition: width 0.3s ease;
-  overflow: hidden;
 }
 
-/* 접혔을 때 */
-.layout.sidebar-collapsed .sidebar {
-  width: 0;
-}
+
 
 .sidebar-title {
   font-size: 0.75em;
